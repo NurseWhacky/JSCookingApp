@@ -9,6 +9,31 @@ const timeout = function (s) {
   });
 };
 
+export const AJAX = async function (url, uploadData = undefined) {
+  try {
+    // GET request
+    const fetchPromise = uploadData
+      ? fetch(url, {
+          method: 'POST',
+          headers: {
+            // info about the data
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(uploadData),
+        })
+      : fetch(url);
+    const res = await Promise.race([fetchPromise, timeout(TIMEOUT_SECS)]);
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+    return data;
+  } catch (err) {
+    throw err; // THROW ERR AGAIN so it gets fired by model.js
+    // add timeout
+  }
+};
+
+/*
 export const getJSON = async function (url) {
   try {
     // GET request
@@ -30,10 +55,10 @@ export const sendJSON = async function (url, uploadData) {
     const fetchPromise = fetch(url, {
       method: 'POST',
       headers: {
-      // info about the data
-      'Content-Type': 'application/json',
+        // info about the data
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(uploadData)
+      body: JSON.stringify(uploadData),
     });
     const res = await Promise.race([fetchPromise, timeout(TIMEOUT_SECS)]);
     const data = await res.json();
@@ -45,3 +70,4 @@ export const sendJSON = async function (url, uploadData) {
     // add timeout
   }
 };
+*/

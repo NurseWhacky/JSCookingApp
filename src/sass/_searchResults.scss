@@ -20,12 +20,13 @@
   }
 
   &__btn {
-    &--prev {
+    &--prev, &--first {
       float: left;
     }
-    &--next {
+    &--next, &--last {
       float: right;
     }
+     
   }
 }
 

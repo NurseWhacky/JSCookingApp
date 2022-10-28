@@ -5,6 +5,7 @@ import { sendJSON } from '../helpers';
 
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
+  _message = 'Recipe added successfully!';
 
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');

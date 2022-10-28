@@ -1,5 +1,6 @@
 import View from './View';
 import icons from '../../img/icons.svg';
+import leftArrow from '../../img/left-arrows-couple-svgrepo-com.svg';
 import { _ } from 'core-js';
 
 class PaginationView extends View {
@@ -32,7 +33,7 @@ class PaginationView extends View {
   // Refactor this code and encapsulate the generation of the markup for the buttons in a new method
 
   _generateButton(currentPage) {
-    const numberPages = Math.ceil(
+    const pageNumber = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
     // console.log(numberPages);
@@ -47,6 +48,7 @@ class PaginationView extends View {
         </button>
         `;
     const next = `
+        
         <button data-goto="${currentPage + 1}" class="btn--inline pagination__btn--next">
             <span>Page ${currentPage + 1}</span>
             <svg class="search__icon">
@@ -54,15 +56,25 @@ class PaginationView extends View {
             </svg>
         </button>
         `;
+    const first = `
+        <button data-goto="1" class="btn--inline pagination__btn--first">
+        <span><<</span>
+        </button>
+        `;
+    const last = `
+        <button data-goto="${pageNumber}" class="btn--inline pagination__btn--last">
+            <span>>></span>
+        </button>
+        `;
     ///////// Different  scenarios
     // Page 1, and there are other pages
-    if (currentPage === 1 && numberPages > 1) return next;
+    if (currentPage === 1 && pageNumber > 1) return `<span>${last + next} </span>`;
 
     // Last page
-    if (currentPage === numberPages && numberPages > 1) return previous;
+    if (currentPage === pageNumber && pageNumber > 1) return `<span>${first + previous}</span>`;
 
     // Other page
-    if (currentPage < numberPages) return previous.concat(next);
+    if (currentPage < pageNumber) return `<span>${first + previous + last + next }</span>`;
 
     // Page 1, and there are NO other pages
     return '';
