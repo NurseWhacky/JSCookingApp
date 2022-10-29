@@ -150,8 +150,8 @@ class RecipeView extends View {
               </svg>
               <div class="recipe__quantity">${
                 !ing.quantity
-                  ? ''
-                  : new Fraction(ing.quantity.toFixed(1)).toString() // fractional library, see doc on npmjs
+                  // ? ''
+                  // : new Fraction(ing.quantity.toFixed(1)).toString() // fractional library, see doc on npmjs
               }</div>
               <div class="recipe__description">
                 <span class="recipe__unit">${!ing.unit ? '' : ing.unit}</span>
